@@ -19,7 +19,7 @@ RUN curl -OL https://raw.githubusercontent.com/ControlSystemStudio/phoebus/maste
 # =================================
 # Final build target "alarm-server"
 # =================================
-FROM openjdk:16-slim-buster as alarm-server
+FROM openjdk:21-slim-buster as alarm-server
 COPY --from=download-extract /var/cache/alarm-server-4.6.3/service-alarm-server-4.6.3.jar /alarm-server/service-alarm-server-4.6.3.jar
 COPY --from=download-extract /var/cache/alarm-server-4.6.3/lib /alarm-server/lib
 WORKDIR /alarm-server
@@ -30,7 +30,7 @@ CMD ["-list"]
 # =================================
 # Final build target "alarm-logger"
 # =================================
-FROM openjdk:16-slim-buster as alarm-logger
+FROM openjdk:21-slim-buster as alarm-logger
 RUN apt-get update && apt-get install -yqq curl && rm -rf /var/cache/*
 COPY --from=download-extract /var/cache/alarm-logger-4.6.3/service-alarm-logger-4.6.3.jar /alarm-logger/service-alarm-logger-4.6.3.jar
 COPY --from=download-extract /var/cache/alarm-logger-4.6.3/lib /alarm-logger/lib
